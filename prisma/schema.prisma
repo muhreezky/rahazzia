@@ -6,6 +6,22 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+model Messages {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  text String
+  recipient Account @relation(fields: [to_username], references: [username])
+  to_username String @db.ObjectId
+  send_date DateTime @default(now())
+}
+
+model Account {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  username String @unique @db.ObjectId
+  password String
+  messages Messages[]
 }

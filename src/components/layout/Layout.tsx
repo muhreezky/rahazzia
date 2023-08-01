@@ -1,9 +1,15 @@
-import { PropsWithChildren, ReactElement } from 'react'
+import { ComponentPropsWithoutRef } from 'react';
+import Nav from '../Nav';
 
-type PropTypes = PropsWithChildren & ReactElement;
+type PropTypes = ComponentPropsWithoutRef<"div">;
 
 export default function Layout(props: PropTypes) {
   return (
-    <div>{props.children}</div>
+    <>
+      <Nav />
+      <main className="p-5 my-6">
+        {props.children}
+      </main>
+    </>
   )
 }
