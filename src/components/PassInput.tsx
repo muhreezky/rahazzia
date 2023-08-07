@@ -1,24 +1,22 @@
-import { IconButton, Input } from "@material-tailwind/react";
-import { useState, type PropsWithRef, ReactElement } from "react";
+import { Button, IconButton, Input, InputProps } from "@material-tailwind/react";
+import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-type PassInputProps = PropsWithRef<any> & {
-  label?: string;
-};
-export default function PassInput(props: PassInputProps) {
+type MyProps = Omit<InputProps, "ref">;
+export default function PassInput(props: MyProps) {
   const [showPass, setShowPass] = useState(false);
+  const toggleShow = () => setShowPass(s => !s);
   return (
-    <div className="relative flex w-full mb-3 max-w-[24rem]">
-      <Input
-        label={props.label}
-        type={showPass ? "text" : "password"}
-        name={props.name}
-        id={props.name}
-        className={`w-full p-3 ${props.className}`}
-      />
-      <IconButton>
-        {showPass ? <FaEyeSlash /> : <FaEye />}
-      </IconButton>
-    </div>
+    <>
+      <div className="relative flex items-center w-full mb-3">
+        <Input
+          type={showPass ? "text" : "password"}
+          {...props}
+        />
+        <IconButton onClick={toggleShow} className="!absolute top-1 right-1 px-3">
+          {showPass ? <FaEyeSlash /> : <FaEye />}
+        </IconButton>
+      </div>
+    </>
   );
 }

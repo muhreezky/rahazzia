@@ -13,7 +13,7 @@ datasource db {
 model Messages {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   text String
-  recipient Account @relation(fields: [to_username], references: [username])
+  recipient Account @relation(fields: [to_username], references: [id])
   to_username String @db.ObjectId
   send_date DateTime @default(now())
 }
