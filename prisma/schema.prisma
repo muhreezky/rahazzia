@@ -15,13 +15,15 @@ model Messages {
   text String
   recipient Account @relation(fields: [to_username], references: [id])
   to_username String @db.ObjectId
-  send_date DateTime @default(now())
+  created_at DateTime @default(now())
 }
 
 model Account {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   email String @unique
-  username String @unique @db.ObjectId
+  username String @unique
   password String
   messages Messages[]
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
 }

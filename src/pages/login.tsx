@@ -8,7 +8,7 @@ export default function Login () {
       <Head>
         <title>Login - Rahazzia</title>
       </Head>
-      <Card className="m-8 p-6" color="light-blue">
+      <Card className="m-5 lg:m-8" color="light-blue">
         <form>
           <CardBody className="flex flex-col gap-3">
             <div className="text-center text-3xl font-bold">
