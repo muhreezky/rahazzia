@@ -44,7 +44,7 @@ export default function Login() {
       </Head>
       <Card className="my-5 mx-4 lg:mx-20" color="light-blue">
         <CardHeader
-          className="text-center text-2xl p-6 lg:p-8 font-bold"
+          className="text-center text-lg lg:text-2xl p-6 lg:p-8 font-bold"
           color="teal"
           variant="gradient"
         >
@@ -59,6 +59,7 @@ export default function Login() {
               id="email"
               label="Email"
               onChange={formik.handleChange}
+              error={!!formik.errors.email}
               required
             />
             <PassInput
@@ -67,6 +68,7 @@ export default function Login() {
               color="white"
               label="Password"
               className="w-full"
+              error={!!formik.errors.password}
               onChange={formik.handleChange}
               required
             />

@@ -8,7 +8,7 @@ export default function Home() {
         <title>Rahazzia App</title>
         <meta charSet="UTF-8" />
       </Head>
-      <Card color="cyan" className="darked">
+      <Card color="cyan" className="my-5 mx-5 lg:mx-15">
         <CardBody>
           <Typography variant="h3" color="white">
             Rahazzia

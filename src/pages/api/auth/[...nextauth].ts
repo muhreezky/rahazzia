@@ -2,12 +2,12 @@ import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { loginAccount } from "@/services/auth.service";
 
-const options: AuthOptions = {
+export const options: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Login Data",
       credentials: {
-        email: { label: "E-mail", placeholder: "Enter your e-mail", type: "email" },
+        email: { label: "E-mail", placeholder: "Enter your e-mail" },
         password: { label: "Password", placeholder: "Enter your password", type: "password" }
       },
       async authorize(credentials, req) {

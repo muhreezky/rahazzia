@@ -1,25 +1,41 @@
 import { Button, Collapse, IconButton, Navbar } from "@material-tailwind/react";
 import Typo from "./Typo";
-import { List, ThreeDots, X } from "react-bootstrap-icons";
+import { List, X } from "react-bootstrap-icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 export default function Nav () {
   const router = useRouter();
+  const { data: session } = useSession();
   const [openNav, setOpenNav] = useState(false);
   const navsList: JSX.Element = (
     <div className="mt-2 mb-4 flex p-3 flex-col gap-2 lg:mt-0 lg:mb-0 lg:flex-row lg:gap-4">
-      <Button variant="outlined" className="w-full lg:w-auto" onClick={() => router.push("/login")}>
-        Login
-      </Button>
-      <Button variant="gradient" className="w-full lg:w-auto" onClick={() => router.push("/register")}>
-        Register
-      </Button>
+      {!session ? (
+        <>
+          <Button variant="outlined" className="w-full lg:w-auto" onClick={() => router.push("/login")}>
+            Login
+          </Button>
+          <Button variant="gradient" className="w-full lg:w-auto" onClick={() => router.push("/register")}>
+            Register
+          </Button>
+        </>
+      ) : (
+        <>
+          <Button variant="outlined" color="red" onClick={() => signOut()}>
+            Logout
+          </Button>
+          <Button variant="gradient" className="w-full lg:w-auto" onClick={() => router.push("/")}>
+            Dashboard
+          </Button>
+        </>
+      )}
     </div>
   )
   useEffect(() => {
-    window.addEventListener("resize", () => setOpenNav(!(window.innerWidth >= 960)));
+    window.addEventListener("resize", () => window.innerWidth >= 960 && setOpenNav(false));
   }, []);
   return (
     <>

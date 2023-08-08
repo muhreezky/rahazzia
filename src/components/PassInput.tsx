@@ -8,12 +8,12 @@ export default function PassInput(props: MyProps) {
   const toggleShow = () => setShowPass(s => !s);
   return (
     <>
-      <div className="relative flex items-center w-full mb-3">
+      <div className="relative flex w-full mb-3">
         <Input
           type={showPass ? "text" : "password"}
           {...props}
         />
-        <Button onClick={toggleShow} className="!absolute top-1 right-1 px-3">
+        <Button variant="gradient" onClick={toggleShow} className="!absolute right-1 top-1" size="sm">
           {showPass ? <EyeSlashFill /> : <EyeFill />}
         </Button>
       </div>
