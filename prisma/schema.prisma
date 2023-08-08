@@ -13,8 +13,9 @@ datasource db {
 model Messages {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   text String
-  recipient Account @relation(fields: [to_username], references: [id])
-  to_username String @db.ObjectId
+  recipient Account @relation(fields: [user_id], references: [id])
+  user_id String @db.ObjectId
+  replies Reply[]
   created_at DateTime @default(now())
 }
 
@@ -26,4 +27,11 @@ model Account {
   messages Messages[]
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+}
+
+model Reply {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  text String
+  message_id String @db.ObjectId
+  message Messages @relation(fields: [message_id], references: [id])
 }

@@ -8,6 +8,6 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
       return res.status(201).json({ message: "New User Registered", user });
     }
   } catch (e: any) {
-    return res.status(500).json({ message: e.message });
+    return res.status(400).json({ message: e.message });
   }
 }

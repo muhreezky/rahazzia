@@ -6,7 +6,6 @@ const theme = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {},
-  darkMode: false,
   plugins: [],
 }
 const withMT = require("@material-tailwind/react/utils/withMT");

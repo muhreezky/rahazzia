@@ -10,14 +10,14 @@ export default function Register () {
         <title>New Account - Rahazzia</title>
       </Head>
       <Card color="light-blue" className="m-5 lg:m-8">
-        <CardHeader className="p-6 lg:p-8 text-3xl font-bold" color="teal" variant="gradient">
-          Register
+        <CardHeader className="p-6 lg:p-8 text-2xl text-center font-bold" color="teal" variant="gradient">
+          Ayo Mulai
         </CardHeader>
         <form method="POST" action="/api/register">
           <CardBody className="flex flex-col gap-3 p-5">
-            <Input color="white" type="email" className="w-full" label="Email" id="email" name="email" />
-            <Input color="white" className="w-full" label="Username" id="username" name="username" />
-            <PassInput color="white" className="w-full" label="Password" id="password" name="password" />
+            <Input color="white" type="email" className="w-full" label="Email" id="email" name="email" required />
+            <Input color="white" className="w-full" label="Username" id="username" name="username" required />
+            <PassInput color="white" className="w-full" label="Password" id="password" name="password" required />
           </CardBody>
           <CardFooter>
             <Button type="submit" color="white" fullWidth>

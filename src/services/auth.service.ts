@@ -41,6 +41,12 @@ export async function registerAccount({ email, password, username }: UserRegiste
   return newUser;
 }
 
-export async function loginAccount(data: UserData) {
-  
+export async function loginAccount(email: string, password: string) {
+  const user = await prisma.account.findFirst({
+    where: { email }
+  });
+  const isValid = await bcrypt.compare(password, user?.password || "");
+  // if (!isValid || !user) throw new Error("E-mail atau password salah, periksa lagi");
+  if (!isValid || !user) return null;
+  return user;
 }
