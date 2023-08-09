@@ -7,12 +7,15 @@ import {
   CardFooter,
   CardHeader,
   Input,
+  Spinner,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import { signIn } from "next-auth/react";
 import Head from "next/head";
+import { useState } from "react";
 
 export default function Login() {
+  const [loading, setLoading] = useState(false);
   const login = async ({
     email,
     password,
@@ -20,12 +23,14 @@ export default function Login() {
     email: string;
     password: string;
   }) => {
+    setLoading(true);
     await signIn("credentials", {
       email,
       password,
       redirect: true,
-      callbackUrl: "/",
+      callbackUrl: "/dashboard",
     });
+    setLoading(false);
   };
   const formik = useFormik({
     initialValues: {
@@ -57,7 +62,7 @@ export default function Login() {
               className="w-full"
               name="email"
               id="email"
-              label="Email"
+              label={formik.errors.email || "Email"}
               onChange={formik.handleChange}
               error={!!formik.errors.email}
               required
@@ -66,7 +71,7 @@ export default function Login() {
               id="password"
               name="password"
               color="white"
-              label="Password"
+              label={formik.errors.password || "Password"}
               className="w-full"
               error={!!formik.errors.password}
               onChange={formik.handleChange}
@@ -74,8 +79,14 @@ export default function Login() {
             />
           </CardBody>
           <CardFooter>
-            <Button type="submit" fullWidth color="white">
-              Confirm
+            <Button 
+              className="flex flex-row gap-3 items-center justify-center" 
+              type="submit" 
+              color="white" 
+              disabled={loading}
+              fullWidth
+            >
+              {loading ? <><Spinner /> Loading...</> : "Login"}
             </Button>
           </CardFooter>
         </form>

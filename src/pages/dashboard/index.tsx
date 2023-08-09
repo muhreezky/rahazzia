@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { options } from "../api/auth/[...nextauth]";
+import Image from "next/image";
 
 export default function Dashboard () {
   const { data: session, status } = useSession();
@@ -21,7 +22,13 @@ export default function Dashboard () {
         <CardHeader color="teal" className="p-6 lg:p-10 text-lg lg:text-2xl font-extrabold">
           My Account
         </CardHeader>
-        <CardBody>
+        <CardBody className="flex flex-col gap-3 items-center">
+          <Image 
+            src="https://ui-avatars.com/api/?size=128" 
+            alt={session?.user?.email || "Profile Pic"}
+            width={128}
+            height={128}
+          />
           {session?.user?.email}
         </CardBody>
       </Card>

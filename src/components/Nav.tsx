@@ -27,7 +27,7 @@ export default function Nav () {
           <Button variant="outlined" color="red" onClick={() => signOut()}>
             Logout
           </Button>
-          <Button variant="gradient" className="w-full lg:w-auto" onClick={() => router.push("/")}>
+          <Button variant="gradient" className="w-full lg:w-auto" onClick={() => router.push("/dashboard")}>
             Dashboard
           </Button>
         </>

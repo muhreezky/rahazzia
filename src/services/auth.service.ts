@@ -1,5 +1,6 @@
 import prisma from "@/libs/prisma";
 import { default as bcrypt } from "bcryptjs";
+import { ApiError } from "next/dist/server/api-utils";
 
 type UserData = {
   email: string;
@@ -46,7 +47,6 @@ export async function loginAccount(email: string, password: string) {
     where: { email }
   });
   const isValid = await bcrypt.compare(password, user?.password || "");
-  // if (!isValid || !user) throw new Error("E-mail atau password salah, periksa lagi");
-  if (!isValid || !user) return null;
+  if (!isValid || !user) throw new ApiError(400, "E-mail atau password salah, periksa lagi");
   return user;
 }
