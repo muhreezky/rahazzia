@@ -30,7 +30,7 @@ export async function checkUser (email:string, username: string) {
 
 export async function registerAccount({ email, password, username }: UserRegister) {
   const exists = await checkUser(email, username);
-  if (exists) throw new Error("Email or Username already exists");
+  if (exists) throw new ApiError(400, "Gunakan E-mail atau Username lain");
   const hashed = await hashPassword(password);
   const newUser = await prisma.account.create({ 
     data: {
@@ -47,6 +47,6 @@ export async function loginAccount(email: string, password: string) {
     where: { email }
   });
   const isValid = await bcrypt.compare(password, user?.password || "");
-  if (!isValid || !user) throw new ApiError(400, "E-mail atau password salah, periksa lagi");
+  if (!isValid) return null;
   return user;
 }

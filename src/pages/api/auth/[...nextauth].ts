@@ -11,15 +11,14 @@ export const options: AuthOptions = {
         password: { label: "Password", placeholder: "Enter your password", type: "password" }
       },
       async authorize(credentials, req) {
-        const user = await loginAccount(credentials?.email || "", credentials?.password || "") || null;
-        if (user) return Promise.resolve(user);
-        return Promise.reject(null);
+        const user = await loginAccount(credentials?.email || "", credentials?.password || "");
+        return user;
       },
     })
   ],
   pages: {
     signIn: "/login"
-  }
+  },
 }
 
 export default NextAuth(options);

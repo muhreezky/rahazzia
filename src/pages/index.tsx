@@ -1,7 +1,9 @@
 import { Button, Card, CardBody, CardFooter, Typography } from "@material-tailwind/react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -18,8 +20,8 @@ export default function Home() {
           </Typography>
         </CardBody>
         <CardFooter>
-          <Button color="white" fullWidth>
-            Mulai Berpesan
+          <Button color="white" fullWidth onClick={() => router.push("/dashboard")}>
+            Mulai
           </Button>
         </CardFooter>
       </Card>

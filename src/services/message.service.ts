@@ -20,17 +20,23 @@ export async function replyMessage(messageId: string, text: string) {
   return reply;
 }
 
-export async function getMessages(userId: string, before: string = "") {
-  // const cursor = before ? { cursor: { id: before } } : {};
+export async function getMessages(username: string | undefined, before: string = "") {
+  const user = await prisma.account.findFirst({ 
+    where: { username }, 
+    select: { 
+      id: true
+    } 
+  });
+  const where = { user_id: user?.id };
   let msg;
-  if (!before) msg = await prisma.messages.findFirst();
+  if (!before) msg = await prisma.messages.findFirst({ where });
   const messages = await prisma.messages.findMany({
     take: 5,
     skip: before ? 1 : 0,
     cursor: {
       id: before || msg?.id
     },
-    where: { user_id: userId }
+    where
   });
   return messages;
 }
