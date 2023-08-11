@@ -1,6 +1,7 @@
-import { Card, CardHeader } from "@material-tailwind/react";
+import { Card, CardBody, CardHeader } from "@material-tailwind/react";
 import Image from "next/image";
 import { ComponentPropsWithoutRef } from "react";
+import Messages from "./Messages";
 
 type MyProps = ComponentPropsWithoutRef<"div"> & {
   email?: string;
@@ -10,7 +11,7 @@ export default function ProfileCard(props: MyProps) {
   const { username } = props;
   return (
     <>
-      <Card className="my-5 mx-5 md:mx-7 lg:mx-36 break-words">
+      <Card color="light-blue" className="my-5 mx-5 md:mx-7 lg:mx-36 break-words">
         <CardHeader color="indigo" variant="gradient" className="p-6 lg:p-10">
           <div className="flex items-center justify-center">
             <Image
@@ -22,6 +23,9 @@ export default function ProfileCard(props: MyProps) {
             />
           </div>
         </CardHeader>
+        <CardBody>
+          <Messages username={username} />
+        </CardBody>
       </Card>
     </>
   );
