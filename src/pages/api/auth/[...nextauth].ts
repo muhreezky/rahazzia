@@ -12,13 +12,23 @@ export const options: AuthOptions = {
       },
       async authorize(credentials, req) {
         const user = await loginAccount(credentials?.email || "", credentials?.password || "");
-        return user;
+        return user || null;
       },
     })
   ],
   pages: {
     signIn: "/login"
   },
+  callbacks: {
+    async session({ session, token }) {
+      return session;
+    },
+    async jwt({ token, account, user }) {
+      token.name = (user as any).username;
+      console.log(user as any);
+      return token;
+    }
+  }
 }
 
 export default NextAuth(options);
