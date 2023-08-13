@@ -30,7 +30,6 @@ export const options: AuthOptions = {
       if (user) {
         token.name = user?.username;
       }
-      console.log("Token", token.name);
       return token;
     },
   },

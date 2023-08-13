@@ -1,7 +1,10 @@
 import prisma from "@/libs/prisma";
 import { getUser } from "./user.service";
 
-export async function sendMessage (userId: string, text: string) {
+export async function sendMessage (username: string, text: string) {
+  const user = await getUser(username);
+  const userId = user?.id;
+  if (!userId) return null;
   const message = await prisma.messages.create({
     data: {
       text,
@@ -22,6 +25,7 @@ export async function replyMessage(messageId: string, text: string) {
 }
 
 export async function getMessages(username: string | undefined, before: string = "") {
+  if (!username) return null;
   const user = await getUser(username as string);
   const where = { user_id: user?.id };
   let msg;
@@ -32,7 +36,11 @@ export async function getMessages(username: string | undefined, before: string =
     cursor: {
       id: before || msg?.id
     },
-    where
+    where,
+    include: { 
+      recipient: true
+    }
   });
+  if (!messages.length) return null;
   return messages;
 }
