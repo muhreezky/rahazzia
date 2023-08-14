@@ -9,7 +9,13 @@ export default function Messages (props: MyProps) {
   return (
     <>
       <div className="flex flex-col">
-        {messages && messages.map((e: any, i: number) => <div key={i} className="w-full">{JSON.stringify(e)}</div>)}
+        {messages && 
+          messages.map(
+            (e: any, i: number) => (
+              <div key={i} className="w-full">{JSON.stringify(e)}</div>
+            )
+          )
+        }
       </div>
     </>
   )
