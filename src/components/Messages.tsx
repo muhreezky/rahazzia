@@ -1,6 +1,6 @@
-import { ComponentProps } from "react";
+import Msg from "./Msg";
 
-type MyProps = ComponentProps<"div"> & {
+type MyProps = {
   username?: string,
   messages?: any[]
 }
@@ -11,9 +11,7 @@ export default function Messages (props: MyProps) {
       <div className="flex flex-col">
         {messages && 
           messages.map(
-            (e: any, i: number) => (
-              <div key={i} className="w-full">{JSON.stringify(e)}</div>
-            )
+            (e: any, i: number) => <Msg key={i} message={e} />
           )
         }
       </div>

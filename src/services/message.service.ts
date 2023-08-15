@@ -38,7 +38,8 @@ export async function getMessages(username: string | undefined, before: string =
     },
     where,
     include: { 
-      recipient: true
+      recipient: true,
+      replies: true,
     }
   });
   if (!messages.length) return null;
