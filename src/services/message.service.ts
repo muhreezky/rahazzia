@@ -14,7 +14,17 @@ export async function sendMessage (username: string, text: string) {
   return message;
 }
 
+export async function msgExists(id: string) {
+  const msg = await prisma.messages.findFirst({ 
+    where: { id }
+  });
+  return !!msg;
+}
+
 export async function replyMessage(messageId: string, text: string) {
+  const exists = await msgExists(messageId);
+  console.log("Exists : ", exists);
+  if (!exists) return null;
   const reply = await prisma.reply.create({
     data: {
       text,
