@@ -3,14 +3,16 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
   const { messageText } = req.body;
-  const { username, before = "" } = req.query;
+  const { username, after = "" } = req.query;
   if (req.method === "GET") {
-    const messages = await getMessages(username as string, before as string);
+    const messages = await getMessages(username as string, after as string);
     const length = messages?.length || 1;
     return res.status(200).json({ 
       message: "Fetch Success", 
-      values: messages,
-      after: messages ? messages[length - 1].id : ""
+      data: {
+        messages,
+        after: messages?.length ? messages?.[length-1]?.id : ""
+      }
     });
   }
   if (req.method === "POST") {
@@ -18,7 +20,10 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
     if (!msg) return res.status(400).json({ message: "Kirim Pesan Gagal" });
     return res.status(201).json({ 
       message: "Kirim Pesan Berhasil", 
-      msg
+      data: {
+        message: msg
+      }
     })
   }
+  return res.status(400).json({ status: 400, message: "Request method tidak valid" });
 }

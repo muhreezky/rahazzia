@@ -34,7 +34,7 @@ export async function replyMessage(messageId: string, text: string) {
   return reply;
 }
 
-export async function getMessages(username: string | undefined, before: string = "") {
+export async function getMessages(username: string | undefined, before: string | undefined) {
   if (!username) return null;
   const user = await getUser(username as string);
   const where = { user_id: user?.id };
@@ -43,13 +43,13 @@ export async function getMessages(username: string | undefined, before: string =
   const messages = await prisma.messages.findMany({
     take: 5,
     skip: before ? 1 : 0,
-    cursor: {
-      id: before || msg?.id
-    },
     where,
     include: { 
       recipient: true,
       replies: true,
+    },
+    cursor: {
+      id: before || msg?.id
     }
   });
   if (!messages.length) return null;

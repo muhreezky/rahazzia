@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Replies from "./Replies";
+import { ChevronCompactDown, ChevronCompactUp } from "react-bootstrap-icons";
+import { Button } from "@material-tailwind/react";
 
 type MyProps = {
   message: Message;
@@ -11,9 +13,14 @@ export default function Msg (props: MyProps) {
     <>
       <div 
         onClick={toggleReplies} 
-        className="border-2 mb-4 px-4 py-2 border-black rounded-md bg-blue-600 cursor-pointer"
+        className="flex justify-between items-center border-2 mb-4 px-4 py-2 border-black rounded-md bg-blue-600 cursor-pointer"
       >
-        {props?.message?.text}
+        <div>
+          {props?.message?.text}
+        </div>
+        <div className="flex gap-3">
+          {openReplies ? <ChevronCompactUp /> : <ChevronCompactDown />}
+        </div>
       </div>
       <Replies open={openReplies} messages={props?.message?.replies} />
     </>

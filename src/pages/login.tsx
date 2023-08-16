@@ -58,7 +58,7 @@ export default function Login() {
         <form onSubmit={formik.handleSubmit}>
           <CardBody className="flex flex-col gap-3">
             <Input
-              color="white"
+              color="blue"
               className="w-full"
               name="email"
               id="email"
@@ -70,7 +70,7 @@ export default function Login() {
             <PassInput
               id="password"
               name="password"
-              color="white"
+              color="blue"
               label={formik.errors.password || "Password"}
               className="w-full"
               error={!!formik.errors.password}
