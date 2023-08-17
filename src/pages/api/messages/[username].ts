@@ -2,7 +2,7 @@ import { getMessages, sendMessage } from "@/services/message.service";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
-  const { messageText } = req.body;
+  const { text } = req.body;
   const { username, after = "" } = req.query;
   if (req.method === "GET") {
     const messages = await getMessages(username as string, after as string);
@@ -16,7 +16,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
     });
   }
   if (req.method === "POST") {
-    const msg = await sendMessage(username as string, messageText as string);
+    const msg = await sendMessage(username as string, text as string);
     if (!msg) return res.status(400).json({ message: "Kirim Pesan Gagal" });
     return res.status(201).json({ 
       message: "Kirim Pesan Berhasil", 

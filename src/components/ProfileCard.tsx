@@ -22,15 +22,15 @@ export default function ProfileCard(props: MyProps) {
     error,
     after: afterId,
     hasNext,
+    mutate,
   } = useMessages(username, after);
   const [list, setList] = useState<any[]>([]);
-
-  const addToList = (arr: any[]) => setList((l) => [...l, ...arr]);
-  const nextPage = (after: string, data: any[]) => {
-    setAfter(after);
+  const addToList = (arg: any[]) => setList(l => [...l, ...arg]);
+  const goNext = (after: string, data: any[]) => {
+    if (!data) return;
     addToList(data);
-  };
-
+    setAfter(after);
+  }
   return (
     <>
       <Card color="light-blue" className="my-5 md:mx-5 lg:mx-36 break-words">
@@ -54,18 +54,19 @@ export default function ProfileCard(props: MyProps) {
         </CardHeader>
         <CardBody>
           {session?.user?.username !== username ? (
-            <SendMessage username={username} />
+            <SendMessage username={username} mutate={mutate} />
           ) : null}
-          <Messages messages={list.length ? list : message?.data?.messages} />
-          <Button
-            disabled={!hasNext}
-            fullWidth
-            className="mt-5"
-            color="white"
-            onClick={() => nextPage(afterId, message?.data?.messages)}
-          >
-            Lanjut...
-          </Button>
+          <Messages messages={list} />
+          <div className="flex justify-center items-center flex-row gap-3 mt-5">
+            <Button
+              disabled={!hasNext}
+              color="white"
+              onClick={() => goNext(afterId, message?.data?.messages)}
+              fullWidth
+            >
+              {!list.length ? "Lihat Pesan" : "Lanjut..."}
+            </Button>
+          </div>
           {isLoading && (
             <LoadingScreen
               size={12}

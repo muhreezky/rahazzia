@@ -9,11 +9,7 @@ export default function Messages (props: MyProps) {
   return (
     <>
       <div className="flex flex-col">
-        {messages && 
-          messages.map(
-            (e: any, i: number) => <Msg key={i} message={e} />
-          )
-        }
+        {messages && messages?.map ((e: any, i: number) => <Msg key={i} message={e} />)}
       </div>
     </>
   )
