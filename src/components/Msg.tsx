@@ -1,28 +1,36 @@
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import Replies from "./Replies";
-import { ChevronCompactDown, ChevronCompactUp } from "react-bootstrap-icons";
-import { Button } from "@material-tailwind/react";
+import { ChevronCompactDown, ChevronCompactUp, ChevronDown } from "react-bootstrap-icons";
+import { Button, Accordion, AccordionHeader, AccordionBody } from "@material-tailwind/react";
 
 type MyProps = {
   message: Message;
 }
+
+function replyDialog (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) {
+  e.stopPropagation();
+}
+
 export default function Msg (props: MyProps) {
   const [openReplies, setOpenReplies] = useState(false);
   const toggleReplies = () => setOpenReplies(s => !s);
   return (
     <>
-      <div 
-        onClick={toggleReplies} 
-        className="flex justify-between items-center border-2 mb-4 px-4 py-2 border-black rounded-md bg-blue-600 cursor-pointer"
+      <Accordion 
+        // onClick={toggleReplies} 
+        open={openReplies}
+        icon={<ChevronDown className={openReplies ? "rotate-180" : ""} />}
       >
-        <div>
+        <AccordionHeader 
+          className="text-white"
+          onClick={toggleReplies}
+        >
           {props?.message?.text}
-        </div>
-        <div className="flex gap-3">
-          {openReplies ? <ChevronCompactUp /> : <ChevronCompactDown />}
-        </div>
-      </div>
-      <Replies open={openReplies} messages={props?.message?.replies} />
+        </AccordionHeader>
+        <AccordionBody>
+          <Replies messages={props?.message?.replies} />
+        </AccordionBody>
+      </Accordion>
     </>
   )
 }

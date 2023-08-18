@@ -64,7 +64,7 @@ export default function ProfileCard(props: MyProps) {
               onClick={() => goNext(afterId, message?.data?.messages)}
               fullWidth
             >
-              {!list.length ? "Lihat Pesan" : "Lanjut..."}
+              {!list.length ? "Lihat Pesan" : hasNext ? "Lanjut..." : "Habis."}
             </Button>
           </div>
           {isLoading && (
