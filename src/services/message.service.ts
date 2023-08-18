@@ -35,6 +35,13 @@ export async function replyMessage(messageId: string, text: string) {
   return reply;
 }
 
+export async function getReplies (message_id: string) {
+  const replies = await prisma.reply.findMany({
+    where: { message_id }
+  });
+  return replies;
+}
+
 export async function getMessages(username: string | undefined, before: string | undefined) {
   const user = await getUser(username as string);
   if (!user) return null;

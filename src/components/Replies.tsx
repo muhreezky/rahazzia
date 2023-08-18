@@ -9,7 +9,7 @@ export default function Replies({ messages, children }: MyProps) {
   return (
     <>
       {children}
-      {messages.map((e: Reply, i: number) => (
+      {messages && messages.map((e: Reply, i: number) => (
         <Reply text={e.text} key={i} />
       ))}
       {!messages?.length && <div className="text-white mb-5">Belum ada balasan</div>}

@@ -56,7 +56,7 @@ export default function ProfileCard(props: MyProps) {
           {session?.user?.username !== username ? (
             <SendMessage username={username} mutate={mutate} />
           ) : null}
-          <Messages messages={list} />
+          <Messages messages={list} mutate={mutate} />
           <div className="flex justify-center items-center flex-row gap-3 mt-5">
             <Button
               disabled={!hasNext}
