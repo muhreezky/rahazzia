@@ -1,8 +1,8 @@
-import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Textarea } from "@material-tailwind/react";
+import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Spinner, Textarea } from "@material-tailwind/react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { PencilFill, SendFill } from "react-bootstrap-icons";
+import { ChatFill, PencilFill } from "react-bootstrap-icons";
 import { KeyedMutator } from "swr";
 
 type MyProps = {
@@ -19,17 +19,18 @@ async function sendMessage (username: string, { arg }: { arg: TArg }) {
 export default function SendMessage (props: MyProps) {
   const { username, mutate } = props;
   const [open, setOpen] = useState(false);
+  const [mutating, setMutating] = useState(false);
   const handler = () => setOpen(o => !o);
   const { handleSubmit, handleChange } = useFormik({
     initialValues: {
       text: ""
     },
     onSubmit(val) {
-      mutate(
-        async () => await sendMessage(username, { arg: { text: val.text } })
-      ).then((e) => {
-        handler();
-      });
+      setMutating(true);
+      mutate(async () => await sendMessage(username, { arg: { text: val.text } }))
+        .then(() => handler())
+        .catch((e) => console.error(e))
+        .finally(() => setMutating(false));
     }
   });
   return (
@@ -46,8 +47,11 @@ export default function SendMessage (props: MyProps) {
             <Textarea onChange={handleChange} name="text" id="text" label="Tulis Pesan di sini" />
           </DialogBody>
           <DialogFooter>
-            <Button className="flex gap-3 justify-center items-center" type="submit" color="light-green" variant="gradient" fullWidth>
-              <SendFill /> Kirim!!!
+            <Button className="flex gap-3 justify-center items-center" type="submit" color="blue" variant="gradient" fullWidth>
+              {mutating 
+                ? <><Spinner />{" Tunggu..."}</> 
+                : <><ChatFill /> Balas</>
+              }
             </Button>
           </DialogFooter>
         </form>

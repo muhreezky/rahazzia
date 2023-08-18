@@ -1,9 +1,8 @@
-import { Button, Card, CardBody, CardHeader } from "@material-tailwind/react";
+import { Button, Card, CardBody, CardHeader, Spinner } from "@material-tailwind/react";
 import Image from "next/image";
 import Messages from "./Messages";
 import Typo from "./Typo";
 import useMessages from "@/hooks/useMessages";
-import LoadingScreen from "./LoadingScreen";
 import SendMessage from "./SendMessage";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -59,21 +58,19 @@ export default function ProfileCard(props: MyProps) {
           <Messages messages={list} mutate={mutate} />
           <div className="flex justify-center items-center flex-row gap-3 mt-5">
             <Button
-              disabled={!hasNext}
+              disabled={!hasNext || isLoading}
               color="white"
+              className="flex justify-center items-center gap-3"
               onClick={() => goNext(afterId, message?.data?.messages)}
               fullWidth
             >
-              {!list.length ? "Lihat Pesan" : hasNext ? "Lanjut..." : "Habis."}
+              {!list.length 
+              ? "Lihat Pesan" : hasNext 
+              ? "Lanjut..." : isLoading 
+              ? <><Spinner />{" Tunggu..."}</> : "Habis"
+              }
             </Button>
           </div>
-          {isLoading && (
-            <LoadingScreen
-              size={12}
-              fontSize="lg"
-              text="Yang sabar sayangg..."
-            />
-          )}
         </CardBody>
       </Card>
     </>

@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Textarea } from "@material-tailwind/react";
+import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Spinner, Textarea } from "@material-tailwind/react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -24,15 +24,18 @@ async function reply (id: string, text: string) {
 
 export default function ReplyMsg (props: MyProps) {
   const { handler, message, open, mutate } = props;
+  const [mutating, setMutating] = useState(false);
   const formik = useFormik({
     initialValues: {
       text: ""
     },
     validationSchema,
     onSubmit({ text }) {
+      setMutating(true);
       mutate(async () => await reply(message.id, text))
         .then(() => handler())
-        .catch((e) => console.error(e));
+        .catch((e) => console.error(e))
+        .finally(() => setMutating(false));
     }
   });
   return (
@@ -64,8 +67,11 @@ export default function ReplyMsg (props: MyProps) {
               />
             </DialogBody>
             <DialogFooter>
-              <Button color="blue" type="submit" fullWidth>
-                Submit
+              <Button disabled={mutating} className="flex gap-3 items-center" color="blue" type="submit" fullWidth>
+                {mutating 
+                ? <><Spinner />{" Tunggu..."}</> 
+                : <><ChatFill /> Balas</>
+                }
               </Button>
             </DialogFooter>
           </form>

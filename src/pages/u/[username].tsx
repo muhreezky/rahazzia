@@ -1,10 +1,18 @@
 import ProfileCard from '@/components/ProfileCard';
+import { getUser } from '@/services/user.service';
+import axios from 'axios';
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
-export default function Username() {
-  const router = useRouter();
-  const { username } = router.query;
+export async function getServerSideProps ({ params }: GetServerSidePropsContext) {
+  const user = await getUser(params?.username as string);
+  if (!user) return ({ notFound: true });
+  return {
+    props: { username: params?.username }
+  }
+}
+
+export default function Username({ username }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>

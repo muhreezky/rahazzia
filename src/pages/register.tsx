@@ -1,3 +1,4 @@
+import LoadingScreen from "@/components/LoadingScreen";
 import PassInput from "@/components/PassInput";
 import {
   Button,
@@ -7,9 +8,15 @@ import {
   CardHeader,
   Input,
 } from "@material-tailwind/react";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 export default function Register() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  if (status === "loading") return <LoadingScreen fontSize="3xl" size={12} />
+  if (session) router.push("/dashboard");
   return (
     <>
       <Head>

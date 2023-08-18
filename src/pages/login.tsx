@@ -1,6 +1,7 @@
 import PassInput from "@/components/PassInput";
 import loginSchema from "@/schemas/login.schema";
 import {
+  Alert,
   Button,
   Card,
   CardBody,
@@ -9,6 +10,7 @@ import {
   Input,
   Spinner,
 } from "@material-tailwind/react";
+import axios from "axios";
 import { useFormik } from "formik";
 import { signIn } from "next-auth/react";
 import Head from "next/head";
@@ -16,6 +18,7 @@ import { useState } from "react";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
+  const [isLoginError, setIsLoginError] = useState(false);
   const login = async ({
     email,
     password,
@@ -24,6 +27,7 @@ export default function Login() {
     password: string;
   }) => {
     setLoading(true);
+    const { data } = await axios.post("/api/login", { email, password });
     await signIn("credentials", {
       email,
       password,
@@ -38,8 +42,12 @@ export default function Login() {
       password: "",
     },
     validationSchema: loginSchema,
-    onSubmit: async (val) => {
-      await login(val);
+    onSubmit: (val) => {
+      login(val)
+        .catch((e) => {
+          setIsLoginError(true);
+          setLoading(false);
+        });
     },
   });
   return (
@@ -47,7 +55,7 @@ export default function Login() {
       <Head>
         <title>Login - Rahazzia</title>
       </Head>
-      <Card className="my-5 mx-4 lg:mx-20" color="light-blue">
+      <Card className="my-5 mx-4 lg:mx-20" color="light-blue" variant="gradient">
         <CardHeader
           className="text-center text-lg lg:text-2xl p-6 lg:p-8 font-bold"
           color="teal"
@@ -58,7 +66,7 @@ export default function Login() {
         <form onSubmit={formik.handleSubmit}>
           <CardBody className="flex flex-col gap-3">
             <Input
-              color="blue"
+              color="white"
               className="w-full"
               name="email"
               id="email"
@@ -70,13 +78,16 @@ export default function Login() {
             <PassInput
               id="password"
               name="password"
-              color="blue"
+              color="white"
               label={formik.errors.password || "Password"}
               className="w-full"
               error={!!formik.errors.password}
               onChange={formik.handleChange}
               required
             />
+            <Alert color="red" open={isLoginError} onClose={() => setIsLoginError(false)}>
+              E-mail atau Password mungkin salah, coba lagi.
+            </Alert>
           </CardBody>
           <CardFooter>
             <Button 
