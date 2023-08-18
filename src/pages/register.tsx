@@ -1,6 +1,7 @@
 import LoadingScreen from "@/components/LoadingScreen";
 import PassInput from "@/components/PassInput";
 import {
+  Alert,
   Button,
   Card,
   CardBody,
@@ -8,13 +9,34 @@ import {
   CardHeader,
   Input,
 } from "@material-tailwind/react";
-import { useSession } from "next-auth/react";
+import axios from "axios";
+import { useFormik } from "formik";
+import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function Register() {
   const { data: session, status } = useSession();
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const formik = useFormik({
+    initialValues: {
+      email: "", username: "", password: ""
+    },
+    onSubmit: (val) => {
+      const { email, password } = val;
+      setIsLoading(true);
+      axios.post("/api/register", val)
+        .then(() => {
+          setIsError(false);
+          signIn("credentials", { email, password, redirect: true, callbackUrl: "/dashboard" });
+        })
+        .catch(() => setIsError(true))
+        .finally(() => setIsLoading(false));
+    }
+  })
   if (status === "loading") return <LoadingScreen fontSize="3xl" size={12} />
   if (session) router.push("/dashboard");
   return (
@@ -30,7 +52,7 @@ export default function Register() {
         >
           Ayo Mulai
         </CardHeader>
-        <form method="POST" action="/api/register">
+        <form onSubmit={formik.handleSubmit}>
           <CardBody className="flex flex-col gap-3 p-5">
             <Input
               color="white"
@@ -40,6 +62,7 @@ export default function Register() {
               id="email"
               name="email"
               required
+              onChange={formik.handleChange}
             />
             <Input
               color="white"
@@ -48,6 +71,7 @@ export default function Register() {
               id="username"
               name="username"
               required
+              onChange={formik.handleChange}
             />
             <PassInput
               color="white"
@@ -56,11 +80,15 @@ export default function Register() {
               id="password"
               name="password"
               required
+              onChange={formik.handleChange}
             />
+            <Alert open={isError} onClose={() => setIsError(false)}>
+              Daftar akun error, mungkin username atau email sudah ada yang punya
+            </Alert>
           </CardBody>
           <CardFooter>
-            <Button type="submit" color="white" fullWidth>
-              Submit
+            <Button disabled={isLoading} type="submit" color="white" fullWidth>
+              {isLoading ? "Tunggu..." : "Daftar"}
             </Button>
           </CardFooter>
         </form>

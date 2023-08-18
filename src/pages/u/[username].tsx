@@ -1,6 +1,5 @@
 import ProfileCard from '@/components/ProfileCard';
 import { getUser } from '@/services/user.service';
-import axios from 'axios';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
 
