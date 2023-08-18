@@ -1,6 +1,7 @@
 import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Textarea } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import { useState } from "react";
+import { ChatFill } from "react-bootstrap-icons";
 import * as Yup from "yup";
 
 type MyProps = {
@@ -26,24 +27,33 @@ export default function ReplyMsg (props: MyProps) {
   });
   return (
     <>
-      <Button onClick={handler} color="green">
-        Balas
-      </Button>
-      <Dialog open={open} handler={handler}>
-        <form onSubmit={formik.handleSubmit}>
-          <DialogHeader className="bg-blue-600">
+      <div className="ml-5 mb-5">
+        <Button 
+          fullWidth 
+          onClick={handler} 
+          size="md" 
+          color="white" 
+          variant="outlined"
+          className="flex items-center gap-3 shadow-lg"
+        >
+          <ChatFill /> Balas
+        </Button>
+      </div>
+      <form onSubmit={formik.handleSubmit}>
+        <Dialog open={open} handler={handler}>
+          <DialogHeader className="bg-blue-600 text-white">
             Balas Pesan ini
           </DialogHeader>
           <DialogBody>
             <Textarea required onChange={formik.handleChange} name="text" id="text" label="Balasan anda..." />
           </DialogBody>
-          <DialogFooter className="px-3 py-1">
+          <DialogFooter>
             <Button color="blue" type="submit" fullWidth>
               Submit
             </Button>
           </DialogFooter>
-        </form>
-      </Dialog>
+        </Dialog>
+      </form>
     </>
   )
 }

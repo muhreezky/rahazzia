@@ -1,9 +1,13 @@
 import { getMessages, sendMessage } from "@/services/message.service";
+import { getUser } from "@/services/user.service";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
   const { text } = req.body;
   const { username, after = "" } = req.query;
+  const user = await getUser(username as string);
+  if (!user) 
+    return res.status(400).json({ status: 400, message: "Akun tidak ada" });
   if (req.method === "GET") {
     const messages = await getMessages(username as string, after as string);
     const length = messages?.length || 1;

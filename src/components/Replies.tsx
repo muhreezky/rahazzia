@@ -1,16 +1,18 @@
-import { AccordionBody, Collapse } from "@material-tailwind/react";
 import Reply from "./Reply";
+import { ReactNode } from "react";
 
 type MyProps = {
   messages: any[];
+  children?: ReactNode | null;
 };
-export default function Replies({ messages }: MyProps) {
+export default function Replies({ messages, children }: MyProps) {
   return (
     <>
+      {children}
       {messages.map((e: Reply, i: number) => (
         <Reply text={e.text} key={i} />
       ))}
-      {!messages?.length && <div className="text-white">Belum ada balasan</div>}
+      {!messages?.length && <div className="text-white mb-5">Belum ada balasan</div>}
     </>
   );
 }
