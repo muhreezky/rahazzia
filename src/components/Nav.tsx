@@ -48,7 +48,8 @@ export default function Nav () {
           </Typo>
           <div className="flex items-center justify-center gap-4">
             <IconButton
-              variant="text"
+              variant="outlined"
+              color="white"
               className="!absolute right-1 lg:hidden mr-5"
               onClick={() => setOpenNav(s => !s)}
               size="lg"

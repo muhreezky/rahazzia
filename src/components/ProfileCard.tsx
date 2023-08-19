@@ -34,9 +34,9 @@ export default function ProfileCard(props: MyProps) {
     <>
       <Card color="light-blue" className="my-5 md:mx-5 lg:mx-36 break-words">
         <CardHeader
-          color="indigo"
+          color="blue"
           variant="gradient"
-          className="w-auto p-6 lg:p-10 mx-10"
+          className="w-auto p-6 lg:p-10 mx-10 shadow-xl shadow-white"
         >
           <div className="flex items-center justify-center gap-3 flex-col">
             <Image
@@ -64,11 +64,10 @@ export default function ProfileCard(props: MyProps) {
               onClick={() => goNext(afterId, message?.data?.messages)}
               fullWidth
             >
-              {!list.length 
+              {isLoading
+              ? (<><Spinner />{" Tunggu..."}</>) : !list.length 
               ? "Lihat Pesan" : hasNext 
-              ? "Lanjut..." : isLoading 
-              ? <><Spinner />{" Tunggu..."}</> : "Habis"
-              }
+              ? "Lanjut..." : "Habis"}
             </Button>
           </div>
         </CardBody>
