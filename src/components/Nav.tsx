@@ -15,19 +15,19 @@ export default function Nav () {
     <div className="mt-2 mb-4 flex p-3 flex-col gap-2 lg:mt-0 lg:mb-0 lg:flex-row lg:gap-4">
       {!session ? (
         <>
-          <Button variant="outlined" className="w-full lg:w-auto" onClick={() => router.push("/login")}>
+          <Button variant="outlined" color="white" className="w-full lg:w-auto" onClick={() => router.push("/login")}>
             Login
           </Button>
-          <Button variant="gradient" className="w-full lg:w-auto" onClick={() => router.push("/register")}>
+          <Button color="white" variant="gradient" className="w-full lg:w-auto" onClick={() => router.push("/register")}>
             Register
           </Button>
         </>
       ) : (
         <>
-          <Button variant="outlined" color="red" onClick={() => signOut()}>
+          <Button variant="gradient" color="red" onClick={() => signOut()}>
             Logout
           </Button>
-          <Button variant="gradient" className="w-full lg:w-auto" onClick={() => router.push("/dashboard")}>
+          <Button color="white" variant="gradient" className="w-full lg:w-auto" onClick={() => router.push("/dashboard")}>
             Dashboard
           </Button>
         </>
@@ -39,9 +39,9 @@ export default function Nav () {
   }, []);
   return (
     <>
-      <Navbar className="sticky h-max max-w-full top-0 z-10 px-4 py-5 lg:px-8 rounded-none">
+      <Navbar color="light-blue" className="sticky h-max max-w-full top-0 z-10 px-4 py-5 lg:px-8 rounded-none">
         <div className="flex items-center justify-between">
-          <Typo textGradient variant="h4" color="cyan" className="cursor-pointer mr-4 py-1.5 font-bold">
+          <Typo variant="h4" color="white" className="cursor-pointer mr-4 py-1.5 font-bold">
             <Link href="/">
               Rahazzia
             </Link>
