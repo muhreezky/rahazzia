@@ -47,7 +47,7 @@ export default function SendMessage (props: MyProps) {
             <Textarea onChange={handleChange} name="text" id="text" label="Tulis Pesan di sini" />
           </DialogBody>
           <DialogFooter>
-            <Button className="flex gap-3 justify-center items-center" type="submit" color="blue" variant="gradient" fullWidth>
+            <Button disabled={mutating} className="flex gap-3 justify-center items-center" type="submit" color="blue" variant="gradient" fullWidth>
               {mutating 
                 ? <><Spinner />{" Tunggu..."}</> 
                 : <><ChatFill /> Balas</>
