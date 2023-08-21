@@ -16,13 +16,12 @@ export default function Home() {
             Rahazzia
           </Typography>
           <Typography color="white" variant="h5" className="font-medium">
-            Hanya untuk yang tau tau aja 🤓. Yuk ucapkan apa yang belum terucap di sini.
-            Semoga dia mengerti maksudmu
+            Hanya untuk yang tau tau aja 🤓. Mulailah menerima pesan rahasia yang jujur dari orang lain
           </Typography>
         </CardBody>
         <CardFooter>
           <Button color="white" fullWidth onClick={() => router.push("/dashboard")}>
-            Mulai
+            Mulai Sekarang
           </Button>
         </CardFooter>
       </Card>

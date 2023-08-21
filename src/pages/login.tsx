@@ -14,6 +14,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { signIn } from "next-auth/react";
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Login() {
@@ -89,7 +90,7 @@ export default function Login() {
               E-mail atau Password mungkin salah, coba lagi.
             </Alert>
           </CardBody>
-          <CardFooter>
+          <CardFooter className="flex flex-col gap-3">
             <Button 
               className="flex flex-row gap-3 items-center justify-center" 
               type="submit" 
@@ -99,6 +100,9 @@ export default function Login() {
             >
               {loading ? <><Spinner /> Loading...</> : "Login"}
             </Button>
+            <Link className="text-white underline hover:font-bold" href="/register">
+              Belum punya akun? Daftar di sini
+            </Link>
           </CardFooter>
         </form>
       </Card>
