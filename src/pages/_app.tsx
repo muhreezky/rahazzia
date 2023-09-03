@@ -20,6 +20,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         <meta name="robots" content="index,follow" />
         <meta name="og:title" content="Rahazzia" />
         <meta name="og:description" content={desc} />
+        <meta name="google-site-verification" content="DMFtof7TtqkyXMriSqtzYdNKO8E6Qf9OC2ArZlrOVT0" />
       </Head>
       <SessionProvider session={session}>
         <style jsx global>
