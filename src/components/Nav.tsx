@@ -39,7 +39,7 @@ export default function Nav () {
   }, []);
   return (
     <>
-      <Navbar color="light-blue" className="sticky h-max max-w-full top-0 z-10 px-4 py-5 lg:px-8 rounded-none">
+      <Navbar color="blue" className="sticky h-max max-w-full top-0 z-10 px-4 py-5 lg:px-8 rounded-none">
         <div className="flex items-center justify-between">
           <Typo variant="h4" color="white" className="cursor-pointer mr-4 py-1.5 font-bold">
             <Link href="/">
