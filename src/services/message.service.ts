@@ -58,7 +58,7 @@ export async function getMessages(username: string | undefined, before: string |
       replies: true,
     },
     cursor: {
-      id: before || msg?.id
+      id: before?.id || msg?.id
     }
   });
   if (!messages.length) return null;
